@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NORDIC TRADING</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 0;
+            padding-top: 70px;
+        }
+
+        .logo img {
+            width: 600px;
+            height: 300px;
+            margin: 0;
+            padding: 0;
+            display: block;
+            mix-blend-mode: multiply;
+            object-fit: cover;
+        }
+
+        .logo {
+            margin: 0;
+            padding: 0;
+            line-height: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        h2 {
+            text-align: center;
+            color: #f5a623;
+            margin-top: 30px;
+        }
+
+        .botones-flotantes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 12px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            border-bottom: 2px solid #f5a623;
+        }
+
+        .botones-flotantes a {
+            display: inline-block;
+            padding: 10px 24px;
+            background-color: #1a2a3a;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            border: 2px solid #f5a623;
+            transition: all 0.3s ease;
+        }
+
+        .botones-flotantes a:hover {
+            background-color: #f5a623;
+            color: #1a2a3a;
+        }
+
+        .productos-diesel,
+        .productos-electricos,
+        .productos-electrogenos,
+        .productos-varios {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .cad {
+            width: 250px;
+            margin: 10px;
+            padding: 20px;
+            background-color: #1a2a3a;
+            color: white;
+            border: 2px solid #f5a623;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px #999;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cad img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .cad p {
+            margin: 10px 0;
+        }
+
+        .cad .precio {
+            font-size: 22px;
+            font-weight: bold;
+            color: #f5a623;
+        }
+
+        .cad a {
+            display: block;
+            margin-top: 18px;
+            padding: 12px;
+            background-color: #f5a623;
+            color: #1a2a3a;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+
+        .info-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            align-items: start;
+        }
+
+        .histo p {
+            font-size: 1rem;
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.6;
+            margin: 0;
+            padding: 1.5rem;
+            background-color: #1a2a3a;
+            color: white;
+            border: 2px solid #f5a623;
+            border-radius: 8px;
+        }
+
+        .carousel-container {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 2px solid #f5a623;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-slide {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(245, 166, 35, 0.8);
+            color: #1a2a3a;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .carousel-btn.prev {
+            left: 10px;
+        }
+
+        .carousel-btn.next {
+            right: 10px;
+        }
+
+        .carousel-btn:hover {
+            background-color: #f5a623;
+        }
+
+        .btn-agrandar {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px 0;
+            background-color: #1a2a3a;
+            color: #f5a623;
+            border: 1px solid #f5a623;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-agrandar:hover {
+            background-color: #f5a623;
+            color: #1a2a3a;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border: 2px solid #f5a623;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(245, 166, 35, 0.4);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #f5a623;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .botones-categorias a {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: #1a2a3a;
+            color: #ffff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            border: 2px solid #f5a623;
+            box-shadow: 0 5px 15px #999;
+        }
+
+        .botones-categorias {
+            text-align: center;
+            align-items: center;
+        }
+
+        @media (max-width: 850px) {
+            .info-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="botones-flotantes">
+        <a href="#inicio">INICIO</a>
+        <a href="#productos">PRODUCTOS</a>
+        <a href="#nosotros-ubicacion">NOSOTROS Y UBICACIÓN</a>
+    </nav>
+
+    <section id="inicio" style="background-color: aliceblue;">
+
+        <div class="logo">
+            <img src="C:\nordic\nordic.jpeg" alt="Logo Nordic Trading">
+        </div>
+
+    </section>
+
+
+    <section id="productos">
+
+        <div class="titulo-categorias">
+            <h2>CATEGORÍAS</h2>
+        </div>
+
+        <div class="botones-categorias">
+            <a href="#Compresores a diesel">COMPRESORES A DIÉSEL</a>
+            <a href="#Compresores electricos">COMPRESORES ELÉCTRICOS</a>
+            <a href="#Grupos electrógenos">GRUPOS ELECTRÓGENOS</a>
+            <a href="#Varios">VARIOS</a>
+        </div>
+
+    </section>
+
+    <section id="Compresores a diesel">
+
+        <div class="titulo-diesel">
+            <h2>COMPRESORAS A DIÉSEL</h2>
+        </div>
+
+        <div class="productos-diesel">
+
+            <div class="cad">
+                <img src="C:\nordic\diesel1.jpg" alt="Compresor Portátil 185 CFM">
+                <p><strong>Compresor Portátil 185 CFM</strong><br>
+                - Flujo: 185 CFM (5.2 m³/min)<br>
+                - Presión: 100 PSI (7 bar)<br>
+                - Motor: Diesel Cummins 49 HP<br>
+                - Chasis con tiro para remolque</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\diesel2.jpg" alt="Compresor de Alta Presión 375 CFM">
+                <p><strong>Compresor de Alta Presión 375 CFM</strong><br>
+                - Flujo: 375 CFM (10.6 m³/min)<br>
+                - Presión: 150 PSI (10.3 bar)<br>
+                - Motor: Caterpillar 125 HP<br>
+                - Sistema de filtrado de alto rendimiento</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\diesel3.jpg" alt="Compresor Minero Heavy Duty 600 CFM">
+                <p><strong>Compresor Minero Heavy Duty 600 CFM</strong><br>
+                - Flujo: 600 CFM (17 m³/min)<br>
+                - Presión: 125 PSI (8.6 bar)<br>
+                - Motor: Diesel Perkins turboalimentado<br>
+                - Cabina insonorizada para uso rudo</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\diesel4.jpg" alt="Compresor Estacionario Diésel 850 CFM">
+                <p><strong>Compresor Estacionario Diésel 850 CFM</strong><br>
+                - Flujo: 850 CFM (24 m³/min)<br>
+                - Presión: 200 PSI (14 bar)<br>
+                - Motor: Cummins 300 HP<br>
+                - Tanque de combustible de gran capacidad</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\diesel5.jpg" alt="Compresor Compacto Diésel 260 CFM">
+                <p><strong>Compresor Compacto Diésel 260 CFM</strong><br>
+                - Flujo: 260 CFM (7.3 m³/min)<br>
+                - Presión: 100 PSI (7 bar)<br>
+                - Motor: Yanmar 4 cilindros<br>
+                - Arranque eléctrico y panel digital</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="Compresores electricos">
+
+        <div class="titulo-electricos">
+            <h2>COMPRESORES ELÉCTRICOS</h2>
+        </div>
+
+        <div class="productos-electricos">
+
+            <div class="cad">
+                <img src="C:\nordic\elec1.jpg" alt="Compresor de Tornillo 15 HP">
+                <p><strong>Compresor de Tornillo 15 HP</strong><br>
+                - Potencia: 15 HP (11 kW)<br>
+                - Presión: 8 a 10 bar<br>
+                - Caudal: 1.6 m³/min<br>
+                - Voltaje: 380V Trifásico</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\elec2.jpg" alt="Compresor Industrial 30 HP">
+                <p><strong>Compresor Industrial 30 HP</strong><br>
+                - Potencia: 30 HP (22 kW)<br>
+                - Presión: 10 bar<br>
+                - Caudal: 3.6 m³/min<br>
+                - Transmisión por correa reforzada</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\elec3.jpg" alt="Compresor de Tornillo 50 HP">
+                <p><strong>Compresor de Tornillo 50 HP</strong><br>
+                - Potencia: 50 HP (37 kW)<br>
+                - Presión: 13 bar<br>
+                - Caudal: 6.2 m³/min<br>
+                - Pantalla táctil de control PLC</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\elec4.jpg" alt="Compresor de Alta Eficiencia 75 HP">
+                <p><strong>Compresor de Alta Eficiencia 75 HP</strong><br>
+                - Potencia: 75 HP (55 kW)<br>
+                - Presión: 8 bar<br>
+                - Caudal: 10.5 m³/min<br>
+                - Variador de frecuencia integrado</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\elec5.jpg" alt="Compresor de Pistón Trifásico 10 HP">
+                <p><strong>Compresor de Pistón Trifásico 10 HP</strong><br>
+                - Potencia: 10 HP (7.5 kW)<br>
+                - Presión: 175 PSI (12 bar)<br>
+                - Tanque: 500 Litros horizontal<br>
+                - Cabezal de hierro fundido</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\elec6.jpg" alt="Compresor Estacionario 100 HP">
+                <p><strong>Compresor Estacionario 100 HP</strong><br>
+                - Potencia: 100 HP (75 kW)<br>
+                - Presión: 10 bar<br>
+                - Caudal: 13.8 m³/min<br>
+                - Sistema de enfriamiento por aire</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\elec7.jpg" alt="Compresor Silencioso 20 HP">
+                <p><strong>Compresor Silencioso 20 HP</strong><br>
+                - Potencia: 20 HP (15 kW)<br>
+                - Nivel de ruido: 65 dB<br>
+                - Caudal: 2.3 m³/min<br>
+                - Incluye secador refrigerativo integr.</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="Grupos electrógenos">
+
+        <div class="titulo-electrogenos">
+            <h2>GRUPOS ELECTRÓGENOS</h2>
+        </div>
+
+        <div class="productos-electrogenos">
+
+            <div class="cad">
+                <img src="C:\nordic\gen1.jpg" alt="Generador Diésel Cabinado 30 kVA">
+                <p><strong>Generador Diésel Cabinado 30 kVA</strong><br>
+                - Potencia Continua: 30 kVA (24 kW)<br>
+                - Voltaje: 220V / 380V Trifásico<br>
+                - Motor: 4 Cilindros en línea<br>
+                - Gabinete insonorizado contra intemperie</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\gen2.jpg" alt="Grupo Electrógeno Industrial 60 kVA">
+                <p><strong>Grupo Electrógeno Industrial 60 kVA</strong><br>
+                - Potencia Continua: 60 kVA (48 kW)<br>
+                - Frecuencia: 50/60 Hz<br>
+                - Motor: Cummins / Perkins<br>
+                - Sistema ATS de transferencia automática</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\gen3.jpg" alt="Generador Minero Heavy Duty 100 kVA">
+                <p><strong>Generador Minero Heavy Duty 100 kVA</strong><br>
+                - Potencia Continua: 100 kVA (80 kW)<br>
+                - Alternador: Stamford autoregulado<br>
+                - Tanque base: 8 a 12 horas de autonomía<br>
+                - Módulo de control Smartgen / Deepsea</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\gen4.jpg" alt="Generador Insonorizado 150 kVA">
+                <p><strong>Generador Insonorizado 150 kVA</strong><br>
+                - Potencia Continua: 150 kVA (120 kW)<br>
+                - Nivel sonoro: 70 dB @ 7 metros<br>
+                - Motor: 6 Cilindros Turbo Intercooler<br>
+                - Interruptor termomagnético de protección</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\gen5.jpg" alt="Grupo Electrógeno Gran Capacidad 250 kVA">
+                <p><strong>Grupo Electrógeno Gran Capacidad 250 kVA</strong><br>
+                - Potencia Continua: 250 kVA (200 kW)<br>
+                - Factor de potencia: 0.8<br>
+                - Arranque electrónico a 24V<br>
+                - Calentador de camisas para clima frío</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\gen6.jpg" alt="Generador Portátil a Gasolina 10 kVA">
+                <p><strong>Generador Portátil a Gasolina 10 kVA</strong><br>
+                - Potencia Máxima: 10 kVA (8 kW)<br>
+                - Voltaje: 220V Monofásico / Trifásico<br>
+                - Motor: 4 tiempos OHV 18 HP<br>
+                - Kit de ruedas y manijas de transporte</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="Varios">
+
+        <div class="titulo-varios">
+            <h2>VARIOS</h2>
+        </div>
+
+        <div class="productos-varios">
+
+            <div class="cad">
+                <img src="C:\nordic\var1.jpg" alt="Secador Refrigerativo de Aire">
+                <p><strong>Secador Refrigerativo de Aire</strong><br>
+                - Capacidad: 3.5 m³/min<br>
+                - Punto de rocío: 3°C a 10°C<br>
+                - Refrigerante ecológico R134a/R407c<br>
+                - Conexión: 1.5" NPT</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\var2.jpg" alt="Tanque Acumulador de Aire 1000L">
+                <p><strong>Tanque Acumulador de Aire 1000L</strong><br>
+                - Capacidad: 1000 Litros<br>
+                - Presión máxima: 12 bar (175 PSI)<br>
+                - Certificación de recipientes a presión<br>
+                - Incluye válvula de seguridad y manómetro</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\var3.jpg" alt="Martillo Neumático Minero 30kg">
+                <p><strong>Martillo Neumático Minero 30kg</strong><br>
+                - Peso: 30 kg<br>
+                - Consumo de aire: 65 CFM<br>
+                - Golpes por minuto: 1300 BPM<br>
+                - Para perforación y demolición pesada</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\var4.jpg" alt="Filtros de Aire y Aceite Industriales">
+                <p><strong>Filtros de Aire y Aceite Industriales</strong><br>
+                - Compatibles con múltiples marcas<br>
+                - Filtrado micronal de alta eficiencia<br>
+                - Separadores aire/aceite de larga duración<br>
+                - Kits de mantenimiento preventivo</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+            <div class="cad">
+                <img src="C:\nordic\var5.jpg" alt="Manguera de Alta Presión para Minería">
+                <p><strong>Manguera de Alta Presión para Minería</strong><br>
+                - Diámetro: 3/4" a 2"<br>
+                - Presión de trabajo: hasta 300 PSI<br>
+                - Refuerzo de malla textil/acero<br>
+                - Resistente a la abrasión y aceites</p>
+                <p class="precio">PRECIO: A consultar</p>
+                <a href="https://web.whatsapp.com/">Consultar al cliente</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <div class="info-container" id="nosotros-ubicacion">
+
+        <section id="nosotros">
+
+            <h2>SOBRE NOSOTROS</h2>
+
+            <div class="histo">
+
+                <p>
+                    Hoy en día, las empresas y trabajadores mineros enfrentan grandes dificultades
+                    para adquirir maquinaria, herramientas y equipos de calidad. Contar con productos
+                    confiables y adecuados es fundamental para trabajar de forma segura y eficiente.
+                    Comprar en lugares poco confiables puede generar riesgos: equipos de baja calidad,
+                    precios excesivos o productos inadecuados. Además, la falta de información clara
+                    aumenta las posibilidades de un uso incorrecto y de accidentes.
+
+                    Por esta razón nace la idea de crear una página web publicitaria para NORDIC TRADING.
+                    El objetivo es facilitar a las empresas y trabajadores mineros el acceso rápido a
+                    información sobre los productos y equipos que necesitan.
+
+                    La web estará orientada principalmente a presentar los productos, sus características,
+                    utilidad y disponibilidad, además de ofrecer una forma sencilla de contacto. No se
+                    limitará solo a reservas, sino que brindará información útil para que los clientes
+                    tomen mejores decisiones.
+
+                    De esta manera, se busca mejorar la comunicación entre NORDIC TRADING y sus clientes,
+                    fortalecer su presencia digital y ofrecer un servicio más organizado, accesible
+                    y confiable.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section id="ubicacion">
+
+            <h2>UBICACIÓN</h2>
+
+            <div class="carousel-container">
+
+                <button class="carousel-btn prev"
+                    onclick="moveSlide(-1)">
+                    &#10094;
+                </button>
+
+                <div class="carousel-slide" id="carouselSlide">
+
+                    <img src="C:\nordic\maps.jpg"
+                        alt="Mapa Ubicación 1"
+                        onclick="openModal(this.src)">
+
+                    <img src="C:\nordic\maps1.jpg"
+                        alt="Mapa Ubicación 2"
+                        onclick="openModal(this.src)">
+
+                    <img src="C:\nordic\maps2.jpg"
+                        alt="Mapa Ubicación 3"
+                        onclick="openModal(this.src)">
+
+                </div>
+
+                <button class="carousel-btn next"
+                    onclick="moveSlide(1)">
+                    &#10095;
+                </button>
+
+            </div>
+
+
+            <button class="btn-agrandar"
+                onclick="zoomCurrentSlide()">
+                Ampliar Imagen
+            </button>
+
+        </section>
+
+    </div>
+
+
+    <div id="imageModal"
+        class="modal"
+        onclick="closeModal()">
+
+        <span class="modal-close">&times;</span>
+
+        <img class="modal-content"
+            id="imgAmpliada">
+
+    </div>
+
+    <script>
+
+        let currentIndex = 0;
+
+        function moveSlide(step) {
+
+            const slide =
+                document.getElementById('carouselSlide');
+
+            const totalSlides =
+                slide.children.length;
+
+            currentIndex =
+                (currentIndex + step + totalSlides) % totalSlides;
+
+            slide.style.transform =
+                `translateX(-${currentIndex * 100}%)`;
+        }
+
+
+        function openModal(src) {
+
+            const modal =
+                document.getElementById('imageModal');
+
+            const modalImg =
+                document.getElementById('imgAmpliada');
+
+            modal.style.display = 'flex';
+
+            modalImg.src = src;
+        }
+
+
+        function closeModal() {
+
+            document.getElementById('imageModal')
+                .style.display = 'none';
+        }
+
+
+        function zoomCurrentSlide() {
+
+            const slide =
+                document.getElementById('carouselSlide');
+
+            const currentImg =
+                slide.children[currentIndex].src;
+
+            openModal(currentImg);
+        }
+
+    </script>
+
+</body>
+
+</html>
